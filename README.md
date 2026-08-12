@@ -29,7 +29,7 @@ Everywhere the CLI isn't — claude.ai chat, the Desktop Home tab — the plugin
 through a marketplace synced from this repo's **remote**:
 
 ```
-/plugin marketplace add hrougier/timeleft-ai
+/plugin marketplace add timeleft-dev/timeleft-ai
 ```
 
 The root `.claude-plugin/marketplace.json` is the catalog that add reads. It does nothing

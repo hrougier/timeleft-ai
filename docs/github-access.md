@@ -149,7 +149,7 @@ Human steps, in order:
 - [x] Register **App 1** under `timeleft-dev`; install on the three repositories — **done
       2026-08-12**, App `Timeleft GitHub MCP`, webhooks off, `Contents`/`Metadata: Read-only`,
       both callback URLs, *Only on this account*. Client ID and secret live in 1Password, not
-      here — this repo is public, and half a credential pair in public buys nothing
+      here — a repo is the wrong home for half a credential pair whoever can read it
 - [x] Put App 1's client ID/secret into the connector's Advanced settings — **done
       2026-08-12**, connector reconnects and reads. Field-tested: an existing custom connector
       **cannot be edited** on claude.ai, so this meant deleting and recreating it. The endpoint
@@ -173,8 +173,8 @@ nothing about this one.
 Neither is a GitHub-access step; both are adjacent enough that losing them would cost this
 work, and neither was written down anywhere until now.
 
-- [ ] **Push `hrougier/timeleft-ai`.** Local commits reach no PO until pushed — claude.ai
+- [ ] **Push `timeleft-dev/timeleft-ai`.** Local commits reach no PO until pushed — claude.ai
       installs from the marketplace synced against the remote. Awaiting an explicit order.
-- [ ] **Move the repo to `timeleft-dev`** for org-wide distribution. That move is also the
-      trigger to revisit *public by decision* (2026-08-08) and the world-readable sandbox IDs,
-      and it puts the repo under the same org that owns both Apps.
+- [x] **Move the repo to `timeleft-dev`** — done 2026-08-12: `timeleft-dev/timeleft-ai`,
+      **private**, which settles the *public by decision* question the personal repo left open
+      and puts the repo under the same org that owns both Apps.

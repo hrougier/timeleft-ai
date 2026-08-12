@@ -3,6 +3,28 @@
 Append-only. One dated section per change decision (what changed, and why).
 Never rewrite or reorder past entries. Maintained by `product:update`.
 
+## 2026-08-12 — the repo's home is `timeleft-dev/timeleft-ai`, and it is private
+
+The open question this changelog recorded on 2026-08-08 — *public by decision, revisited when
+the repo moves to `timeleft-dev`* — is closed by the move. Private: under the org there is no
+distribution reason to be public, because the access bundle and `/plugin marketplace add` both
+read a private repo the members can already see, and the board's database IDs stop being
+world-readable as a side effect rather than as a fix.
+
+The rule that never depended on visibility still holds and is now stated where it cannot be
+missed: **no credential, token or secret in this repo, ever**, whoever can read it. The
+GitHub App's client ID and secret live in 1Password for that reason, not because the repo
+happened to be public.
+
+Five live references were still sending people to `hrougier/timeleft-ai` — the README's and
+`plugin-loading.md`'s install commands, CLAUDE.md's registration line and its remote doctrine,
+and `github-access.md`'s push step. All repointed. The two mentions inside older changelog
+entries stay as they are: they record what was true when written, which is the point of an
+append-only record.
+
+No version bump — nothing in any plugin's behaviour changed, only where the repo lives and
+what it says about itself.
+
 ## 2026-08-12 — the pre-push review, second pass: the provenance layer, and a gate that ate its own approval
 
 A second read before the push, this one diffing every vendored skill against the pin and
