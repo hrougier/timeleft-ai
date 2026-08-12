@@ -1,0 +1,118 @@
+name: checks
+
+# The gate is `pull_request`: with these checks required in main's branch protection, a
+# failure blocks the merge. That is the only trigger that can prevent anything.
+#
+# `push` to main is the tripwire, not the gate — by then the commit has landed and CI can
+# only tell you. It stays because direct pushes to main are this repo's actual practice, so
+# without it the checks would often not run at all; and because the rule most often broken
+# (a plugin changing without its changelog entry) is broken by direct commits, not by PRs.
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  pins-match:
+    name: All upstream pins are identical
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compare the pinned SHA across every plugin's lock.md
+        run: |
+          set -euo pipefail
+          pins=$(grep -horE '\b[0-9a-f]{40}\b' .claude/skills/*/lock.md | sort -u)
+          count=$(printf '%s\n' "$pins" | grep -c . || true)
+          if [ "$count" -ne 1 ]; then
+            echo "::error::plugins disagree on the upstream pin — CLAUDE.md requires one pin for the whole repo"
+            grep -HorE '\b[0-9a-f]{40}\b' .claude/skills/*/lock.md | sort -u
+            exit 1
+          fi
+          echo "one pin across all plugins: $pins"
+
+  manifests:
+    name: Manifests and catalog agree
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Every plugin.json parses, matches its directory, and is catalogued coherently
+        run: |
+          python3 - <<'PY'
+          import json, pathlib, sys
+          fail = []
+          root = pathlib.Path('.')
+
+          catalog = json.loads((root / '.claude-plugin/marketplace.json').read_text())
+          catalogued = {p['name']: p for p in catalog['plugins']}
+
+          on_disk = {}
+          for manifest in sorted(root.glob('.claude/skills/*/.claude-plugin/plugin.json')):
+              plugin_dir = manifest.parent.parent
+              try:
+                  data = json.loads(manifest.read_text())
+              except json.JSONDecodeError as exc:
+                  fail.append(f"{manifest}: invalid JSON — {exc}")
+                  continue
+              on_disk[data.get('name', '')] = data
+              if data.get('name') != plugin_dir.name:
+                  fail.append(f"{manifest}: name {data.get('name')!r} != directory {plugin_dir.name!r}")
+              if not data.get('version'):
+                  fail.append(f"{manifest}: no version — it is the repo/bundle parity signal")
+              skills = plugin_dir / 'skills'
+              if not skills.is_dir() or not any(skills.glob('*/SKILL.md')):
+                  fail.append(f"{plugin_dir}: catalogued plugin ships no skills")
+
+          for name, entry in catalogued.items():
+              source = root / entry['source']
+              if not (source / '.claude-plugin/plugin.json').is_file():
+                  fail.append(f"marketplace.json: {name} points at {entry['source']}, which has no plugin.json")
+              if name not in on_disk:
+                  fail.append(f"marketplace.json: {name} is catalogued but not on disk")
+
+          for name, data in on_disk.items():
+              if name not in catalogued:
+                  fail.append(f"{name} exists on disk but is not in marketplace.json")
+              for dep in data.get('dependencies', []):
+                  if dep.get('name') not in catalogued:
+                      fail.append(f"{name} depends on {dep.get('name')!r}, which the catalog does not offer")
+
+          for problem in fail:
+              print(f"::error::{problem}")
+          sys.exit(1 if fail else 0)
+          PY
+
+  changelog-rides-the-change:
+    name: A changed plugin ships its entry and its bump
+    if: github.event_name != 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Any plugin touched here must move its changelog and its version
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            range="origin/${{ github.base_ref }}...HEAD"
+          else
+            before="${{ github.event.before }}"
+            # branch creation and force-pushes leave no usable predecessor
+            if [ -z "$before" ] || [ "$before" = "0000000000000000000000000000000000000000" ] \
+               || ! git cat-file -e "$before^{commit}" 2>/dev/null; then
+              echo "no comparable predecessor for this push — nothing to check"
+              exit 0
+            fi
+            range="$before..HEAD"
+          fi
+          changed=$(git diff --name-only $range)
+          status=0
+          for plugin in $(printf '%s\n' "$changed" | sed -n 's|^\.claude/skills/\([^/]*\)/.*|\1|p' | sort -u); do
+            touched=$(printf '%s\n' "$changed" | grep "^\.claude/skills/$plugin/" | grep -v 'changelog.md$' | grep -v 'plugin.json$' || true)
+            [ -z "$touched" ] && continue
+            printf '%s\n' "$changed" | grep -q "^\.claude/skills/$plugin/changelog.md$" \
+              || { echo "::error::$plugin changed without a changelog entry"; status=1; }
+            printf '%s\n' "$changed" | grep -q "^\.claude/skills/$plugin/.claude-plugin/plugin.json$" \
+              || { echo "::error::$plugin changed without a version bump"; status=1; }
+          done
+          exit $status
