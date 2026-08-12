@@ -1,0 +1,14 @@
+{
+  "name": "product",
+  "displayName": "Product Team",
+  "version": "0.24.0",
+  "description": "The product team's workflow over Notion PRDs: triage, draft, refine, resolve tickets, address comments, hand off to tech.",
+  "author": {
+    "name": "Timeleft Product"
+  },
+  "dependencies": [
+    {
+      "name": "shared"
+    }
+  ]
+}
