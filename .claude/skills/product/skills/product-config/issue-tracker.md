@@ -32,15 +32,15 @@ target, that session is wrong: stop and say so.
 
 | What              | Address                                                     |
 | ----------------- | ----------------------------------------------------------- |
-| The board (v2)    | `https://app.notion.com/p/3b38d7bb13a28142b65ec11fb39929f0` |
-| Workflow Contract | `https://app.notion.com/p/3b38d7bb13a281a88929e5351fb4b726` |
+| The board (v2)    | `https://app.notion.com/p/3ba8d7bb13a281f0a5d1daa5096ddcc4` |
+| Workflow Contract | `https://app.notion.com/p/3ba8d7bb13a2816ba610f8cdc5d8e3d0` |
 
 | Database | Data source URL                                     |
 | -------- | --------------------------------------------------- |
 | PRDs     | `collection://2c5b7096-8ff2-4dea-b069-348744dfa04d` |
 | Tickets  | `collection://dbc38ac2-910f-4690-9c56-fe9829fc944f` |
 | Glossary | `collection://48e29cba-935a-4c1c-85f9-13cc5866b406` |
-| Phases   | `collection://acf656b5-dafb-41fc-80fb-6d226799a5cb` |
+| Phases   | `collection://c6baba7a-40e7-49d9-a63d-317e1cb326a2` |
 
 ## Tools
 
@@ -544,8 +544,26 @@ For `product:refine-prd` and the ticket resolvers (`design-prd`, plus the shared
   research tickets in parallel, where every unclaimed one stays on the frontier while an
   agent is already working it. Claim all of them, then fire all of them.
 - **Blocking** — the `Blocked by` / `Blocks` self-relation. `Open` → `Open blockers` →
-  `Blocked` compute it; the **Frontier** view (unassigned + not Blocked) is the
-  edge of the known.
+  `Blocked` render it in Notion's own UI; the **Frontier** view (unassigned + not Blocked)
+  is the edge of the known.
+
+  **The three definitions, written down because nothing else holds them.** They live only in
+  the Notion UI — no session can read a formula's expression through the API (`formulaCode://`
+  is not fetchable), so if that database is ever lost or forked they are unrecoverable from
+  anywhere but here:
+
+  | Property | Kind | Definition |
+  | -------- | ---- | ---------- |
+  | `Open` | formula | `prop("Status") == "Open"` |
+  | `Open blockers` | rollup | relation `Blocked by` · target property `Open` · calculate **Show original** |
+  | `Blocked` | formula | `prop("Open blockers")` |
+
+  Read them and the earlier field note stops being a mystery: *Show original* returns the
+  **list** of blockers' `Open` values rather than an aggregate, so `Blocked` is a list —
+  `true, false` — not a boolean. That is why a checkbox-style filter on it silently does
+  nothing, why the Frontier view under-filters, and why the frontier is computed in SQL
+  below. These three are **the human-facing rendering** of a fact the plugin works out for
+  itself; nothing a skill does depends on them.
 
   **Compute the frontier yourself, in SQL. Do not depend on the Frontier view.** One
   query returns everything needed; resolve the blocking in memory:

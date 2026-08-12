@@ -3,6 +3,47 @@
 Append-only. One dated section per change decision (what changed, and why).
 Never rewrite or reorder past entries. Maintained by `product:update`.
 
+## 2026-08-12 — 1.0.0: the board starts from a clean page
+
+The PO's finding, and it is about who reads the history rather than what it says: **every page
+carried dozens of build-era revisions, visible to the whole team.** A contract rewritten
+fourteen times in one afternoon reads as unsettled even when the current text is right. So the
+prose was recreated rather than edited — a real starting point instead of an archaeology site.
+
+**Recreated:** the board page, the Workflow Contract, and the Phases database (11 rows, each
+written in one call so its history is a single revision; `Set by`'s colours set at creation,
+where the API does work). **Kept:** PRDs, Tickets, Glossary and Decisions, moved onto the new
+page with their IDs, relations, rows and comments intact. The three live PRDs still carry their
+tickets and their revs, verified after the move.
+
+**Why the databases were not recreated** — three walls, each of which would have traded clean
+history for a broken machine:
+
+- **A formula's expression cannot be read through the API.** `formulaCode://` is not fetchable,
+  so the frontier machinery (`Open` → `Open blockers` → `Blocked`) could only have been rebuilt
+  from memory, and a subtly wrong frontier silently offers the wrong ticket. All three
+  definitions are now written into `issue-tracker.md`, since nothing else holds them.
+- **Option colours and status renames are creation-time or UI-only.** Keeping the PRDs database
+  keeps the phase palette that was just clicked into place.
+- **Comments do not survive recreation**, and the template's self-referential views are clicks
+  no API can make.
+
+Two API walls confirmed on the way, both now recorded: a page cannot be **created** in a
+subtree the connector may only read — the same 404 that blocked moving one there — so the new
+tree was built at workspace level for the PO to drag into place; and **deleting the old board
+page would have deleted the four databases under it**, which is why they were moved first. That
+ordering was the one genuinely destructive risk in the whole operation.
+
+Rule 4 of the handshake also gained the ending it was missing since 2026-08-06: a comment can
+resolve **three** ways, not two — the PRD changes, a reply explains why not, or the comment
+names a real open decision and becomes a ticket on the map. The skill has said three for a
+week; the canonical contract still said two.
+
+**Version 1.0.0.** Not because anything got bigger, but because the workflow now has readers
+who did not build it: the phases, the rules and the bindings are a contract with the product
+team rather than a build in progress, and changing one is a breaking change for people rather
+than a decision for us. `shared` stays at `0.x` — it is a toolkit, not a release.
+
 ## 2026-08-12 — Claude design is a Claude Code capability, and the vocabulary catches up
 
 **A setup session went hunting for a fix that cannot exist.** Asked to check the design tool
