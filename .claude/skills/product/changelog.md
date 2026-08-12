@@ -3,6 +3,31 @@
 Append-only. One dated section per change decision (what changed, and why).
 Never rewrite or reorder past entries. Maintained by `product:update`.
 
+## 2026-08-12 — a `gh` pass is not a pass (first trial-run finding)
+
+The first install trial: `setup-product-ai` reached for the `gh` command line to check the
+code route. The PO's objection is right and sharper than it first looks — **POs have no
+shell; they have the org's custom GitHub MCP connector, and nothing else.**
+
+The skill's text was not obviously wrong: it named both routes and said *"either is a pass —
+check both before reporting a gap"*, which is exactly the rule `code-repository.md` sets for
+**reading** code, and correct there. It is wrong in a *setup* skill, because setup's whole
+job is to verify what the human in front of you can reach. Either-route makes the check
+pass on the builder's laptop, where a shell and an authenticated `gh` are sitting right
+there, while the connector a PO depends on is untested — the most misleading result this
+skill can produce, since it hands someone a green light for a route they do not have.
+
+So the rule is now asymmetric where it matters: two routes exist, they are **not
+interchangeable here**, and **a `gh` pass is never a pass for the connector**. Where both
+exist the connector is the one whose failure counts; where only the shell exists, say
+plainly that the route works for this session and is unverified for anyone on claude.ai —
+and check the connector anyway. A new failure bullet covers exactly that case.
+
+Untouched on purpose: `code-repository.md`'s either-route rule for reads. A resolver
+grounding a claim should use whatever route it has, and the first one that answers is the
+right one. The two docs now differ deliberately — reading wants any route, verifying wants
+*the* route. Version 0.24.1.
+
 ## 2026-08-12 — the repo's home is `timeleft-dev/timeleft-ai`, and it is private
 
 The open question this changelog recorded on 2026-08-08 — *public by decision, revisited when

@@ -95,13 +95,25 @@ in **`product-config`**'s code binding, then read one small file from each repos
 one is not enough, because installation is per-repository and two can work while the
 third was never added.
 
-Two routes serve this, and either is a pass — **check both before reporting a gap**: the
-`gh` command line where a shell exists, or the **GitHub MCP connector** where there isn't
-one. Discover the tools you actually have rather than assuming their names; if they are
-deferred, load them first.
+**The route that counts is the one this person will actually use, and for a product
+manager that is the GitHub MCP connector.** Two routes exist — the `gh` command line where
+a shell exists, and the connector where there isn't one — but they are not
+interchangeable *here*, because this skill's whole job is to verify what the human in
+front of you can reach. Discover the tools you actually have rather than assuming their
+names; if they are deferred, load them first.
+
+So: **a `gh` pass is never a pass for the connector.** If this session has a shell and the
+command line works, that proves the repositories exist and are readable *by whoever owns
+that shell* — it says nothing about the connector a PO will be using, and reporting it as
+a pass hands them a green light for a route they don't have. Check the connector on its own
+terms and report the two separately. Where both exist, the connector is the one whose
+failure matters.
 
 What a failure means:
 
+- **No connector, but a working shell** → say plainly that the code route works *for this
+  session* and is unverified for anyone on claude.ai, then check the connector anyway. A
+  builder's machine passing is the most misleading result this skill can produce.
 - **No tools and no shell** → this surface has no code route. That's the finding, not a
   fault: say the reading works in Claude Code and move on. Don't send anyone to a
   settings page over it.
