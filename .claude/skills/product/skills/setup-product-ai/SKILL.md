@@ -162,20 +162,38 @@ carries the anatomy and the instructions, and it's linked from the Workflow Cont
 it's missing, say plainly that filing is blocked until someone installs it, and point at
 the contract page.
 
-## How to report
+## How to report: a walk, not a survey
 
-One message. Lead with the verdict — can they work or not — then only what needs doing.
+Run every check first — they are quick reads. Then **the shape of what you say depends on
+whether anything needs doing**, because a person who has something to click and a person
+who doesn't need opposite messages.
 
-- **All clear** → say so in a line, name what's now reachable in plain terms, and say what
-  to do first: describe a product problem in their own words.
-- **Something's missing** → the blockers first, each as one line with the click that fixes
-  it and who has to make it. Separate **yours** from **someone else's**: a vault
-  invitation and an organisation approval are not the same errand.
-- **Working with a limitation** → say what still works before what doesn't. "Everything
-  works; design questions come back as a page rather than a design file" is the shape.
+**Nothing needs doing** → one message. They can work: say so, name what's reachable in
+plain terms, and say what to do first — describe a product problem in their own words.
 
-Never a table of green ticks and internal names. Never "5 checks, 4 passed" — a count is
-not a finding.
+**Something needs doing** → **announce the steps, then walk the first one alone.**
+
+1. **Name the whole route in one line first**: how many things need connecting, in order,
+   each in three or four words. "Two things to connect: the board, then the design tool."
+   A person who knows the shape of the errand reads the rest as progress; a person handed
+   four findings at once has to work out for themselves which one to do.
+2. **Then only step one** — what to click, where, and who has to click it. Not step two.
+   You explain a step when they reach it, because by then they may have seen something
+   that changes it.
+3. **End on the handover**: what they do, and that you will re-check when they say it's
+   done. One action, one gate.
+
+**Nothing that needs no action may sit between the human and their next click.** A working
+surface, a limitation they can't fix, a check that passed — all of it goes *after* the live
+step, one line each, or waits for the end. The failing example this rule comes from led with
+the blocker, then spent three paragraphs on things needing no action, and put the actual
+instruction last: the one sentence that mattered was the hardest to find.
+
+**Separate yours from someone else's.** A vault invitation and an organisation approval are
+errands for different people, and mixing them into "some things need doing" strands both.
+
+Never a table of green ticks and internal names. Never "5 checks, 4 passed" — a count is not
+a finding.
 
 ## Rules
 

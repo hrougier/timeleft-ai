@@ -3,6 +3,36 @@
 Append-only. One dated section per change decision (what changed, and why).
 Never rewrite or reorder past entries. Maintained by `product:update`.
 
+## 2026-08-12 — setup walks, it doesn't survey (second trial-run finding)
+
+The trial's second report was accurate and unusable. Four findings in one message: the
+blocker, then two things needing no action, then the good news, then — last — the single
+sentence the person could act on. The PO's read: it mixes multiple things and never says
+what the steps are.
+
+The rule that produced it was **"One message. Lead with the verdict, then only what needs
+doing"** — reasonable for a report, wrong for a procedure. Setup is not a status page; it is
+someone standing next to you while you connect things. So the shape now depends on whether
+anything needs doing, because a person with something to click and a person with nothing to
+click need opposite messages:
+
+- **Nothing to do** → one message, as before. Verdict, what's reachable, what to do first.
+- **Something to do** → **announce the route, then walk the first step alone.** How many
+  things need connecting and in what order, three or four words each — then step one only,
+  with the click and whose it is, ending on "tell me when it's done and I'll re-check".
+  Step two gets explained when they reach it, because by then they may have seen something
+  that changes it.
+
+And the rule that would have caught the failing example on its own: **nothing that needs no
+action may sit between the human and their next click.** A working surface, an unfixable
+limitation, a passed check — after the live step, one line each, or at the end. In the
+transcript those took three paragraphs and pushed the only actionable sentence to the
+bottom.
+
+Kept: separating *your* errands from someone else's, since a vault invitation and an
+organisation approval strand different people; and no tables of ticks, no "4 of 5 passed" —
+a count is not a finding. Version 0.24.2.
+
 ## 2026-08-12 — a `gh` pass is not a pass (first trial-run finding)
 
 The first install trial: `setup-product-ai` reached for the `gh` command line to check the
