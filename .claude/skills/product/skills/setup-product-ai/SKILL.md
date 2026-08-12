@@ -50,12 +50,16 @@ button. **Not connected** is the fastest filter to send someone to.
 **In this order, and the order matters**: the plugins first, because a plugin arrives with
 its own connectors declared and installing it can change what the connectors screen offers —
 checking connectors before the plugins are in means reporting gaps that install themselves.
-Then **every connector in one pass**, so a person visits that screen once, in three tiers
-they can act on: `Notion` and the org's `GitHub MCP` are what the workflow **needs**;
-`claude-design` and `Slack` are **advised** — each absence costs a specific thing, and the
-plugin says so honestly rather than failing; `Figma` is **offered**, worth a click only if
-they already work in it. Name all five with their status, even the ones that pass — a
+Then **every connector they can actually act on, in one pass**, so a person visits that
+screen once, in tiers: `Notion` and the org's `GitHub MCP` are what the workflow **needs**;
+`Slack` is **advised** — without it a glossary term can only be checked against the
+conversation, so terms get written down as unverified; `Figma` is **offered**, worth a click
+only if they already work in it. Name each with its status, even the ones that pass — a
 connector you didn't mention is one a PO assumes you never checked.
+
+**`claude-design` is not on that list on claude.ai**, because it cannot be connected there
+(check 4). Mention it as a surface fact in its own line, never as a row to go and find — a
+connector named in a list of things to connect is a thing a person will try to connect.
 
 Take them in this order. The first failure that blocks everything is the shared plugin;
 past that, each gap is independent and worth reporting even if an earlier one failed.
@@ -180,13 +184,22 @@ a question for whoever set it up, checked once, outside a PO's session.
 
 ### 4. The design tool
 
-Answering a design question starts in **Claude design**, which ships with this plugin and
-needs a one-time sign-in and a paid plan. Check the tools are in hand; on the connectors
-screen it's the row named **claude-design**, also badged *Custom*.
+Answering a design question starts in **Claude design** where it exists — and on claude.ai
+it does not. **It is a Claude Code capability**, so a session here finding no
+`claude-design` tools has learned which surface it is on. That is the finding.
 
-Missing → report it as a **limitation, not a blocker**: design questions still get
-answered, as a self-contained page instead of a shared design file. Everything else in the
-plugin works. Don't inflate this into a failed setup.
+**Nothing to connect, nothing to fix, nothing to look up.** Do not list it among the
+connectors to go and connect. Do not send them to the connectors screen for it. Do not ask
+an admin to repair it. And if a sign-in attempt has already produced an error page — a
+retired endpoint, a stale URL, anything of that shape — **that page is Anthropic's
+infrastructure, not this team's configuration**: say so in one line and stop. Searching the
+web to diagnose it spends a session on a wall that isn't ours, and hands a PO an errand that
+cannot succeed.
+
+What to say instead, once: design questions get answered here as a **self-contained
+interactive page** rather than a shared design file — that is the medium on this surface, not
+a degradation — and the shared-file route is there in Claude Code if they ever want it.
+Everything else in the plugin works. Never inflate this into a failed setup.
 
 **Figma is offered, not required — and the question is whether *they* work in it.** The
 workflow's default medium is Claude design and stays that way: design questions go there

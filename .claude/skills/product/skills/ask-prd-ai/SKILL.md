@@ -20,11 +20,11 @@ who does what next.
 
 You don't remember every skill, so ask.
 
-A **flow** is a path through the skills. Here the main flow *is* the PRD's status — the machine in the Phases database — so routing starts by reading where the PRD stands. Given a request, route it; given a question, answer it yourself and route nothing.
+A **flow** is a path through the skills. Here the main flow *is* the PRD's phase — the machine in the Phases database — so routing starts by reading where the PRD stands. Given a request, route it; given a question, answer it yourself and route nothing.
 
 ## Reads are served, not routed
 
-"Where is X?", "what's next on it?", "what's open here?" — orientation reads about a PRD you're pointing at. Answer directly: the status, the frontier (open, unclaimed, unblocked tickets), the open comment threads, and — in one clause, if there is one — what this PRD is waiting on and how far along that is. A plain "what's next" is a **frontier read**, never a checkpoint — don't inflate a question into a session.
+"Where is X?", "what's next on it?", "what's open here?" — orientation reads about a PRD you're pointing at. Answer directly: the phase, the frontier (open, unclaimed, unblocked tickets), the open comment threads, and — in one clause, if there is one — what this PRD is waiting on and how far along that is. A plain "what's next" is a **frontier read**, never a checkpoint — don't inflate a question into a session.
 
 One read is not yours: **"what needs my attention?"** across the corpus — the un-triaged, the waiting-on-info. That is `/triage-prd`'s show-what-needs-attention act; its buckets are triage's machine, not the router's. Route it.
 
@@ -46,10 +46,10 @@ session; the machine advances one station at a time.
 - **`In Design`** → the prototype ticket is live — **`/design-prd`** owns it while claimed. Once it resolves the PRD stays `In Design` — it was the map's last ticket, so route it exactly like an empty-frontier `In Refinement`: **`/refine-prd`** (checkpoint) or **`/send-prd-to-dev`** (the gate).
 - **`Ready for development`** → tech's inbox; its triage accepts (→ `In development`) or sets `Tech review: Changes requested`. Product acts only on that flag — see the review overlay below.
 - **`In development` and beyond** → the tech team owns the PRD. Serve reads; route nothing. The `Tech issue` link is where the work now lives.
-- **`On Hold`** → touch nothing. The PO parks and resumes by hand; when they resume, route by the restored status.
+- **`On Hold`** → touch nothing. The PO parks and resumes by hand; when they resume, route by the restored phass.
 - **`Rolled out` / `Rejected`** → terminal. Reads only; a Rejected page is the triage corpus, never reopened.
 
-**The review overlay — checked at every product-side status.** `Data review` and `Tech review` are courts, not phases; they ride on top of the route. The overlay's authority is the **Workflow Contract's Reviews section** — same rank as the `Handled by` column, which routes the phase axis only:
+**The review overlay — checked at every product-side phase.** `Data review` and `Tech review` are courts, not phases; they ride on top of the route. The overlay's authority is the **Workflow Contract's Reviews section** — same rank as the `Handled by` column, which routes the phase axis only:
 - either flag at **`Changes requested`**, or fresh review comments → **`/address-prd-feedback`** walks them.
 - **requesting** a review (either or both, in parallel — typically on a `Draft`, where an objection costs a re-draft instead of a re-refine) is a property write like any other: shown behind the confirmation line, rev-stamped per the tracker doc. Verdicts are never product's to set.
 

@@ -138,7 +138,7 @@ Two modes. Either way, **never resolve more than one ticket per session** — wi
 
 User invokes with a loose idea.
 
-On this tracker the loose idea arrives already drafted — an issue whose problem statement and first-pass solution `/triage-prd` and `/draft-prd` have shaped. Chart against it: the map lives on that issue per the tracker doc, and creating the map flips it to `In Refinement` under the tracker doc's status rules.
+On this tracker the loose idea arrives already drafted — an issue whose problem statement and first-pass solution `/triage-prd` and `/draft-prd` have shaped. Chart against it: the map lives on that issue per the tracker doc, and creating the map flips it to `In Refinement` under the tracker doc's phase rules.
 
 1. **Name the destination.** Run a `/grilling` and `/glossary-and-decisions` session to pin down what this map is finding its way to — the spec, decision, or change. The destination fixes the scope, so it's settled first.
 2. **Map the frontier.** Grill again, **breadth-first** this time: fan out across the whole space rather than deep on any one thread, surfacing the open decisions and the first steps takeable now. **If this surfaces no fog** — the way to the destination is already clear, the whole journey small enough for one session — you don't need a map. Stop and ask the user how they'd like to proceed.

@@ -3,6 +3,45 @@
 Append-only. One dated section per change decision (what changed, and why).
 Never rewrite or reorder past entries. Maintained by `product:update`.
 
+## 2026-08-12 — Claude design is a Claude Code capability, and the vocabulary catches up
+
+**A setup session went hunting for a fix that cannot exist.** Asked to check the design tool
+on claude.ai, it hit the sign-in fallback's error page — a retired endpoint that used to serve
+the legacy Google Drive MCP — then searched the web, diagnosed "the org's connector points at a
+stale URL", and handed the PO an admin errand. Every step downstream of the first was
+reasonable; the first was wrong. **Claude design's sign-in exists in Claude Code and nowhere
+else**, so on claude.ai there is nothing to connect and nothing to repair.
+
+This is the `gh` finding again in different clothes: a skill offering a route the surface does
+not have, and a session then working hard on the consequences. Three rules now close it, in the
+binding and in setup:
+
+- **Nothing to connect, nothing to fix, nothing to look up.** `claude-design` is dropped from
+  the list of connectors to go and visit — *a connector named in a list of things to connect is
+  a thing a person will try to connect* — and mentioned instead as a surface fact in its own
+  line.
+- **An error page from a vendor's sign-in fallback is Anthropic's infrastructure, not this
+  team's configuration.** Say so in one line and stop. Searching the web to diagnose it spends
+  a session on a wall that isn't ours.
+- **On claude.ai the self-contained interactive page is *the medium*, not a degradation.**
+  "Fall back and say so" language is reserved for the genuinely degraded case: Claude Code with
+  the MCP unreachable. A PO should not be told the good outcome is a consolation prize.
+
+**And the vocabulary caught up with the `Phase` rename.** The property moved on 2026-08-11 but
+the prose did not: fourteen places across the bindings and six skills still said *status* where
+they meant the PRD's phase — phase rules, phase writes, "flip a phase", "the phase does not
+move", "route by the restored phase", "plain English for phases". Four uses stay deliberately:
+Notion's property *type* is literally status, the Tickets database's own `Status` is
+Open/Resolved/Dropped and correct, the voice rule "never a status label" is about the word a PO
+hears and covers both, and MP's verbatim `AGENT-BRIEF.md` says "status quo".
+
+Notion was worse than the repo, because the canonical prose lives there: eight edits on the
+Workflow Contract and five Phases rows. Two were more than vocabulary — the contract credited
+the tech side's **`to-issue`** skill, dissolved a week ago into triage (files the issue) and
+drafting (back-fills the link and flips), and it described "an approved **Idea**" for a phase
+now called `Problem`. A canonical contract naming a skill that no longer exists is worse than
+one using an old word. Version 0.27.0.
+
 ## 2026-08-12 — the board becomes Product Roadmap Board v2, and the plugin says so
 
 *Team Plugins HQ* was the name of a build effort. The board is about to sit beside the

@@ -10,19 +10,19 @@ and not conditional** — it governs how everything this plugin says is said, on
 surface, whether or not a session-start block reached you (on claude.ai and the Desktop
 Chat tab, none does). The binding documents are loaded on demand; the voice never is.
 
-The plugin's skills speak abstract verbs — file an issue, flip a status, comment, read
+The plugin's skills speak abstract verbs — file an issue, flip a phase, comment, read
 the code, make a design artifact. **This skill holds what those verbs bind to.** Three
 documents, siblings of this file:
 
 | Read this | When a skill says |
 | --------- | ----------------- |
-| `issue-tracker.md` | "the tracker doc", "load the binding", "file an issue", "flip the status", anything about PRDs, tickets, statuses, comments, the map, or the frontier |
+| `issue-tracker.md` | "the tracker doc", "load the binding", "file an issue", "flip the status", anything about PRDs, tickets, phases, comments, the map, or the frontier |
 | `code-repository.md` | "explore the codebase", "verify the claim", "primary sources" where the source is code |
 | `design-tool.md` | "a design artifact", "the medium", "takes", "capture the chosen one" |
 
 Read the whole of the one you need — they are written to be loaded entire, not grepped
 for a line. `issue-tracker.md` is the one nearly every session wants; it carries the
-addresses, the status rules, the confirmation line, and a "When a skill says…" section
+addresses, the phase rules, the confirmation line, and a "When a skill says…" section
 that translates every abstract verb into this tracker's mechanics.
 
 ## Why these live in a skill
@@ -108,7 +108,7 @@ lead is its own failure.
    When something is about to get overcomplicated, say so in one sentence — "it might
    just overcomplicate no?" wants a straight answer, not agreement.
 
-6. **Plain English for statuses and fields.** "It's still a draft." "It's with the tech
+6. **Plain English for phases and fields.** "It's still a draft." "It's with the tech
    team." "Nobody's waiting on you." Never `Draft`, never "rev 1", never a review flag's
    property name, never a count of tickets. Internal fields are internal.
 
@@ -133,7 +133,7 @@ lead is its own failure.
    message. Not "Alert 3". Not "as defined in the Requirements section", which is another
    lookup wearing a helpful face.
 
-   Same test for anything numbered or coded: a ticket, a section, a status, a glossary
+   Same test for anything numbered or coded: a ticket, a section, a phase, a glossary
    term used before it is agreed. If a sentence would send someone back to the document to
    understand it, it isn't finished. And if the document's own labels are opaque enough to
    need this every time, say so once — a PRD whose requirements are only distinguishable

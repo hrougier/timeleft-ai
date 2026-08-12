@@ -7,13 +7,23 @@ medium, the ritual, and the capture. Sibling of `issue-tracker.md` (the tracker)
 
 ## The medium: Claude design by default
 
-**Every prototype ticket starts in Claude design** — the **`claude-design` MCP, shipped
-with this plugin** (`.mcp.json`; one-time per user: a sign-in on the connectors screen,
-Pro/Max/Team plan required — never a command handed to a PO, who is on a surface that has
-none): create the project, build the takes there, link the chosen one. A behavior
-or flow question exports as a live prototype; a static mock is judged as the page it
-is. If the MCP is unreachable or unauthenticated, fall back to a **self-contained
-interactive HTML artifact** and say so. Either way: all takes in one deliverable,
+**Where Claude design works, every prototype ticket starts there** — the
+**`claude-design` MCP, shipped with this plugin** (`.mcp.json`): create the project, build
+the takes there, link the chosen one. A behavior or flow question exports as a live
+prototype; a static mock is judged as the page it is.
+
+**It is a Claude Code capability, and that is the whole of it.** Its sign-in exists there and
+nowhere else, so **on claude.ai there is nothing to connect and nothing to fix**: a session
+that finds no `claude-design` tools has learned which surface it is on, not that something is
+broken. Never send anyone to the connectors screen for it, never ask an admin to repair it,
+and never investigate the error page its sign-in fallback may show — that page is Anthropic's
+infrastructure, not this team's configuration, and diagnosing it burns a session on a wall
+that isn't ours. Say which surface does the job and move on.
+
+So on claude.ai the fallback is simply **the medium**: a **self-contained interactive HTML
+artifact**, said plainly and without apology — the takes are still radically different, still
+switchable in place, still one link. Reserve "fall back and say so" language for the case that
+is genuinely degraded: Claude Code with the MCP unreachable or unauthenticated. Either way: all takes in one deliverable,
 switchable in place — several radically different takes, one link (MP's UI-prototype
 pattern) — and the chosen take's link is the handoff whatever the question was.
 
@@ -51,7 +61,7 @@ prompts.
   **`Figma`** property — the property keeps its name for prod-board compatibility;
   any design URL belongs there, artifact links included.
 - The verdict and each review prompt's answer → the ticket's **`## Resolution`**
-  body section, per the tracker doc's resolve act (gist, `Resolved by`/`on`, the status
+  body section, per the tracker doc's resolve act (gist, `Resolved by`/`on`, the phase
   flip, fold-back, and rev bump all ride the same package). Resolving the ticket does
   **not** move the PRD off `In Design` — it's the map's last ticket, so the PRD is already
   where `send-prd-to-dev` picks it up. The icon stays as it was — it is the ticket's type,

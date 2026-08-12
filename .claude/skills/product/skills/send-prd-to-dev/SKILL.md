@@ -18,7 +18,7 @@ The last product-side act. `/refine-prd`'s checkpoint challenges the *map*; this
 
 ## Before anything
 
-Load the Workflow Contract per the tracker doc's status rules; if it is unreachable, stop. This skill performs the handoff transition — it never guesses one.
+Load the Workflow Contract per the tracker doc's phase rules; if it is unreachable, stop. This skill performs the handoff transition — it never guesses one.
 
 If this session is the one that just refined, resolved, or addressed comments on this PRD, say so and suggest running the gate from a fresh session instead — the whole point of this check is reading the document the way its first outside reader will, and a session that sat through the grillings already knows too much to read it that way. Proceed here anyway if the human would rather not switch; never block on it.
 
@@ -36,7 +36,7 @@ Walk all seven checks and collect every failure — don't stop at the first; the
 
 ## Two exits
 
-- **Fail** — each failure becomes one comment on the document, anchored to the section it concerns, drafted and shown to the human before posting. The status does not move. `/address-prd-feedback` walks the comments; the gate reruns after.
+- **Fail** — each failure becomes one comment on the document, anchored to the section it concerns, drafted and shown to the human before posting. The phase does not move. `/address-prd-feedback` walks the comments; the gate reruns after.
 - **Pass** — flip the issue to `Ready for development` under the tracker doc's phase rules, and report what was verified. The review verdicts ride across untouched — the handoff is the one flip that spends nothing, since it changes whose court the PRD sits in rather than what the document says — and the pass comment names the rev each verdict was stamped at, so tech can see what was approved and when. From here the tech team's triage takes it: acceptance flips `In development` with the issue link back-filled; a disagreement comes back as `Tech review: Changes requested` with anchored comments — the status stays put, the flag says it's product's move.
 
 Never soften a failure into a pass with caveats. A caveat on a handoff is a comment the tech team has to discover for themselves — the gate exists so they never have to.

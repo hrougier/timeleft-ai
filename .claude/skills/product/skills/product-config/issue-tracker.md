@@ -106,11 +106,11 @@ External pull requests are **not** a request surface on this tracker.
    was stamped at, so the evidence survives even if a later write spends them.
 4. `On Hold` is `Set by: human (PO)` — **no plugin ever sets it or clears it.** A skill
    that believes an effort should pause says so and stops; the flip is the PO's, by
-   hand, with a comment naming why and the status to resume to.
+   hand, with a comment naming why and the phase to resume to.
 5. A PRD whose `Phase` matches no **live** row of the Phases database (rows marked
    RETIRED don't count) is mis-set — stop and flag it; never route or transition from
-   a status the machine no longer has.
-6. After any write, re-fetch the page and confirm the status landed and the body
+   a phase the machine no longer has.
+6. After any write, re-fetch the page and confirm the phase landed and the body
    renders. A write you didn't verify is a write you didn't make.
 
 ## No write without a yes
@@ -359,7 +359,7 @@ Desktop Chat tab, none does). You run these; you never recite them.
   prior-rejection half of the search above. *Writing* is filing a page with
   `Phase = Rejected` (or appending the new request to an existing concept page's
   list + a comment). Where OUT-OF-SCOPE.md says a reconsidered rejection's file is
-  *deleted*: here nothing is ever deleted and a `Rejected` status never flips — the
+  *deleted*: here nothing is ever deleted and a `Rejected` phase never flips — the
   reconsidered request proceeds as a **new** PRD linking the rejected page, and a
   comment on the rejected page records that it was superseded.
 
@@ -426,7 +426,7 @@ For `product:refine-prd` and the ticket resolvers (`design-prd`, plus the shared
   **`Not yet specified`** (the fog) and **`Tickets & decisions`** (the embedded Tickets
   views). Those three strings are the live template's, verified 2026-08-09; match the
   page, never this file, if they ever disagree. There is no separate map issue, and no
-  `wayfinder:map` label to apply — the `In Refinement` status plays that role.
+  `wayfinder:map` label to apply — the `In Refinement` phase plays that role.
 
   **"Map" is the vendored skill's word for the concept, not a word on the page and not a
   word for the PO.** The section is called Refinement because a PO reads it; say "the
