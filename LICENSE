@@ -1,0 +1,42 @@
+Licensing for this repository
+=============================
+
+1. Vendored skills — MIT License
+--------------------------------
+
+Portions of the plugins in this repository are vendored, word for word or as
+audited adaptations, from https://github.com/mattpocock/skills at the commit
+pinned in each plugin's lock.md. Today that covers, under
+.claude/skills/product/skills/: triage (and its AGENT-BRIEF.md and
+OUT-OF-SCOPE.md), refine (from wayfinder), research, grilling, prototype (and
+its LOGIC.md and UI.md), domain-modeling (and its ADR-FORMAT.md and
+CONTEXT-FORMAT.md), and the flow-map structure of ask (from ask-matt).
+Per-file provenance, including every drift from the upstream text, is recorded
+in each plugin's lock.md.
+
+Those portions are © 2026 Matt Pocock and licensed under the MIT License:
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+
+2. Everything else
+------------------
+
+All other content in this repository — the net-new skills, the tracker and
+code-repository bindings, hooks, documentation, and configuration — is
+© 2026 Timeleft. Internal use; all rights reserved.
