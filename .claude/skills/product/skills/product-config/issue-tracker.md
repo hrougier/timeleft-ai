@@ -6,9 +6,7 @@ team has exactly one tracker, so this binding ships in-plugin (maintained by
 `product:setup-product-ai`) rather than per-repo.
 
 Every address below points at **Product Roadmap Board v2** — the product team's own board,
-sitting beside the production Product Roadmap Board in their space, where the whole team can
-read it. It began as a private rig and is not one any more: the mock PRDs are gone and every
-row that remains is real work.
+in their space, where the whole team reads it. Every row on it is real work.
 
 So treat every page under it as live: no throwaway edits, no test rows, nothing you would not
 want a colleague to open tomorrow. And **you are not the only writer** — humans work here
@@ -28,6 +26,19 @@ No skill writes to it, comments on it, or creates pages under it. Taking it over
 separate, gated effort. If a session's context makes the prod board look like the right
 target, that session is wrong: stop and say so.
 
+**Read-only means it is reference, never a source.** You may read it to check whether
+something already exists. You may not take content, decisions or answers from it. A decision
+recorded there was made by other people, under rules this contract does not govern, with no
+record on our side of who agreed to it — copying it in launders someone else's call into our
+document and answers an open question nobody here closed.
+
+**And a PRD there with the same subject as ours is a collision, not prior art to fold.** Two
+live documents for one feature is a duplication of effort, and which board owns that feature
+is a human's decision, never a session's. So: name both pages, say plainly that the same
+feature is being specified twice, and **stop** — do not merge, do not "pull in what's settled",
+do not treat the other document as ahead of or behind this one. Resolving it may well mean
+this PRD should not exist; that is exactly the kind of call to hand back.
+
 ## Addresses
 
 | What              | Address                                                     |
@@ -43,6 +54,14 @@ target, that session is wrong: stop and say so.
 | Phases   | `collection://c6baba7a-40e7-49d9-a63d-317e1cb326a2` |
 
 ## Tools
+
+**Reaching the board without this binding is the failure mode, not a shortcut.** The Notion
+tools are sitting right there in every session, and reading a PRD feels like it needs nothing
+— which is exactly how a session ends up talking phases and revs at a product manager, or
+treating the production board as a source. Everything that governs this tracker lives in
+skills a session has to choose to open: on claude.ai no hook nudges you, so the choice is the
+only safeguard there is. If you are about to query, read or write anything on this board and
+have not loaded `product:ask-prd-ai`, that is the first act, not an optional one.
 
 Notion access is the claude.ai Notion connector (`mcp__claude_ai_Notion__*`). The tools
 may be deferred — load them with a **single** `ToolSearch` call listing every tool the
@@ -530,7 +549,7 @@ For `product:refine-prd` and the ticket resolvers (`design-prd`, plus the shared
   the full framing lives in the body's `## Question`. With the `Resolution` column,
   the decisions view then reads as question-and-answer pairs. `task` tickets are the
   one exemption — they do rather than decide, so they name the work, imperative
-  ("Provision the sandbox access"). `/address-prd-feedback`'s Ticket outcome files exactly this,
+  ("Get us a test account on the partner API"). `/address-prd-feedback`'s Ticket outcome files exactly this,
   unwired — the checkpoint wires it later.
 - **Claim** — set `Assignee` before any work, to **the human driving the session** (the
   same person who will land in `Resolved by`). The assignee *is* the claim; an open,

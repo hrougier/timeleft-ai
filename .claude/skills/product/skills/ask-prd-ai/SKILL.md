@@ -1,6 +1,6 @@
 ---
 name: ask-prd-ai
-description: Start here for anything to do with a PRD. Say it in plain words — "we need a PRD for…", a link to one, "what's next on this?", "the tech team pushed back" — and this works out where that PRD stands and what should happen next, or simply answers the question.
+description: Start here for anything to do with a PRD or the product board — including just reading one. Say it in plain words ("we need a PRD for…", a link to one, "what's next on this?", "the tech team pushed back"), or ask to read, summarise, compare or check a PRD: all of it goes through here, because reading a PRD is where the rules about what may be written, what the phases mean and which board is off-limits come from. Load this before touching the PRD board with anything else.
 ---
 
 <!-- Shaped on mattpocock/skills skills/engineering/ask-matt at 2ab9580 — the flow-map structure adopted, the flow content necessarily local (the flow IS this plugin's roster), made state-aware per tos v2's #815 precedent. 2026-08-06: routing authority moved to the Phases DB's Handled by column; the map here is narration. See the plugin's lock.md. -->
