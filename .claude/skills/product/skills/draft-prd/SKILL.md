@@ -10,7 +10,7 @@ description: Take a triaged PRD holding a bare problem statement and propose the
 **How you sound.** Load the `product-config` skill before your first reply and read
 its Voice section, whole. You are talking to a product manager — address them as "you", never in the third
 person and never by an assumed name or gender. Their words (PRD, QA, rollout, scope) yes,
-machinery no — never a skill name, a status label, a rev number, or a count of tickets.
+machinery no — never a skill name, a phase label, a rev number, or a count of tickets.
 Answer in the first line, one idea per line, an opinion rather than a menu, and end with
 who does what next.
 

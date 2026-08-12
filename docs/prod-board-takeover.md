@@ -1,7 +1,7 @@
 # Taking over the production Product Roadmap Board
 
 The product plugin runs today against **Product Roadmap Board v2** — the team's own board,
-which grew out of the build's private rig and now sits beside the production one. The production **Product Roadmap Board** is read-only reference — no skill
+sitting beside the production one. The production **Product Roadmap Board** is read-only reference — no skill
 writes to it, and the three addresses that name it are listed in `issue-tracker.md`.
 
 This file is the ledger for the day that changes. It records what already matches, what

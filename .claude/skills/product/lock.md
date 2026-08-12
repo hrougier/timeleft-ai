@@ -108,10 +108,7 @@ vendoring convention.
   code, product's makes a design artifact, and `/prototype` chose between them silently.
   Acts on a PRD took a `-prd` suffix, the rest a `product-` qualifier.
 
-  **Scope, corrected 2026-08-12.** This record used to claim "body text is untouched in
-  every case; the amendment was one line of frontmatter per skill". That was false, and the
-  review that caught it found the sweep had gone two files further than the roster:
-  R1 also rewrites every **call site** of a renamed skill inside the vendored bodies
+  **Scope.** The rename is not frontmatter-only. R1 also rewrites every **call site** of a renamed skill inside the vendored bodies
   (`/triage` → `/triage-prd` in triage's §Invocation, `/prototype` → `/design-prd` and
   `/domain-modeling` → `/glossary-and-decisions` in wayfinder's Ticket Types), which is
   correct — a body naming a skill this plugin does not ship would route nowhere. What was
@@ -155,7 +152,7 @@ vendoring convention.
   confirmation line ("no write without a yes") — the original patch front-ran MP's
   own Recommend-then-wait discipline.
 - **P4 — Fold outcome** (§Apply the outcome, one bullet). A third disposition found in
-  the first sandbox dry-run: a live issue covers the area and the request adds a real
+  the first dry run: a live issue covers the area and the request adds a real
   nuance — comment the nuance onto it, file nothing. Upstream has no counterpart
   bullet; recorded in changelog.md (2026-08-06, `product:triage-prd`).
 - **P5 — `disable-model-invocation` removed** (frontmatter, 2026-08-06). Upstream

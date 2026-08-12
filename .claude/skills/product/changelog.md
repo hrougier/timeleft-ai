@@ -3,53 +3,41 @@
 Append-only. One dated section per change decision (what changed, and why).
 Never rewrite or reorder past entries. Maintained by `product:update`.
 
-## 2026-08-12 — the session that never opened the plugin, and the board it treated as a source
+## 2026-08-12 — a board is read through the plugin, and the plugin says nothing about its own past
 
-Two findings from one 1.0.0 dry run, and the second is the mechanism under every finding
-we have had all week.
-
-**"Sandbox" survived in the one line that denied it.** The binding opened with *"It began as a
-private rig and is not one any more"* — and a session read the frame rather than the
-correction, calling the team's board "our sandbox tracker" throughout. The origin story is
-deleted, not corrected: a binding says what **is**. (An example ticket titled "Provision the
-sandbox access" went too — a document that says a word teaches it, whatever the sentence
-around it claims.)
-
-**It then proposed to merge another team's PRD into ours.** It found *Custom filter presets* on
-the **production** board — real, `Ready for development`, TOS squad, with a settled prototype —
-called it *"what's ahead of us"*, and offered to fold its scope, its UI and its two PostHog
-events into our document as answers to our open questions. The guard said *never write to it*;
-nothing said *never take from it*. Now it does, in two parts:
-
-- **Read-only means reference, never a source.** A decision recorded there was made by other
-  people under rules this contract does not govern, with no record on our side of who agreed to
-  it. Copying it in launders someone else's call and closes a question nobody here closed.
-- **A PRD there with the same subject is a collision, not prior art to fold.** Name both pages,
-  say the feature is being specified twice, and **stop** — which board owns a feature is a
-  human's call, and the honest answer may be that our PRD should not exist. This one is our own
-  doing: renaming the dry-run PRDs onto real roadmap names created two live documents per name,
-  and the machine had no rule for it.
-
-**And the mechanism, which is worth more than either fix: the session never loaded the plugin.**
-It went to the Notion tools directly, produced two replies thick with phases, revs and ticket
-types, and only routed properly when the PO asked *"did you use the product plugin btw?"*. On
-claude.ai **no hook runs**, so loading a skill is model judgment — which makes every guard we
-have written opt-in, and leaves a session that skipped them unable to know it skipped anything.
-The cross-board merge was not a rule being broken; it was a rule never read.
-
-Two mitigations, neither of which forces anything, and that limit is now written down rather
-than assumed:
+**The routing finding, which is the mechanism under most of what we have fixed this week: a
+session worked the board without ever loading the plugin.** It went to the Notion tools
+directly, produced two replies thick with phases, revs and ticket types, and only routed
+properly when the PO asked whether it had used the plugin at all. On claude.ai **no hook runs**,
+so loading a skill is model judgment — which makes every guard we have written opt-in, and
+leaves a session that skipped them unable to know it skipped anything. Three mitigations, and
+the limit they leave is now written down rather than assumed:
 
 - `ask-prd-ai`'s description claims **reads** explicitly — reading, summarising, comparing,
   checking. A read is what feels like it needs no skill, and it is where the rules about what
   may be written and which board is off-limits actually come from.
 - The tracker doc now **opens** with it: reaching the board without the binding is the failure
   mode, not a shortcut, and on a surface with no hook the choice is the only safeguard there is.
+- **The PRD template carries the instruction itself** (PO's call). Every PRD now opens with a
+  line naming the Product team plugin skills and asking that they be loaded before anything is
+  proposed. The page is the one place a session reliably looks, so that is where the routing
+  instruction belongs.
 
-Worth recording the good half too: once the PO named it, the session re-read the skill, said
-plainly that it had skipped it, re-classified the drift as a refining checkpoint rather than a
-fact-finding read, and asked before writing anything. The guards work; they just have to be
-opened. Version 1.1.0.
+**And a document says what is, never what used to be.** A binding that opened by explaining
+what the board *is not any more* taught a session the discarded word instead of the correction,
+which then ran through a whole session's replies. So this pass strips every citation of a dead
+name, a superseded label, a retired skill and a former state from the surfaces a session
+actually loads — skill text, the binding docs, the repo's own instructions and the two docs
+pages. Where a rename still matters to somebody it lives in one place, the takeover ledger,
+which exists to map two boards' vocabularies. Everywhere else the rule is: no origin stories,
+no "formerly", no self-corrections in the margin. Superseded history stays in this file, dated,
+because that is what this file is for.
+
+**Reverted from earlier today, same version line:** a two-part rule forbidding any use of the
+production board as a source, added after a session offered to fold a production PRD's scope
+into ours. It was a misreading — the PO had told that session to look at production precisely
+because it was further along, so the behaviour was correct and the rule punished it. The
+standing guard is unchanged and sufficient: read it, never write to it. Version 1.1.1.
 
 ## 2026-08-12 — 1.0.0: the board starts from a clean page
 

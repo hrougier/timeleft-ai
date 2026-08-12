@@ -14,7 +14,7 @@ surfaces and not others; loading it yourself is what makes the plugin sound the 
 everywhere. If it is already in context, don't load it twice.
 
 Its floor, in case you go no further: answer in the first line · a PO's words (PRD, QA,
-rollout, scope) yes, machinery no · never a skill name, a status label, a rev, or a
+rollout, scope) yes, machinery no · never a skill name, a phase label, a rev, or a
 ticket count · one idea per line, about eight of them · an opinion, not a menu · end with
 who does what next.
 

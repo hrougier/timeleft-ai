@@ -26,19 +26,6 @@ No skill writes to it, comments on it, or creates pages under it. Taking it over
 separate, gated effort. If a session's context makes the prod board look like the right
 target, that session is wrong: stop and say so.
 
-**Read-only means it is reference, never a source.** You may read it to check whether
-something already exists. You may not take content, decisions or answers from it. A decision
-recorded there was made by other people, under rules this contract does not govern, with no
-record on our side of who agreed to it — copying it in launders someone else's call into our
-document and answers an open question nobody here closed.
-
-**And a PRD there with the same subject as ours is a collision, not prior art to fold.** Two
-live documents for one feature is a duplication of effort, and which board owns that feature
-is a human's decision, never a session's. So: name both pages, say plainly that the same
-feature is being specified twice, and **stop** — do not merge, do not "pull in what's settled",
-do not treat the other document as ahead of or behind this one. Resolving it may well mean
-this PRD should not exist; that is exactly the kind of call to hand back.
-
 ## Addresses
 
 | What              | Address                                                     |
@@ -126,9 +113,8 @@ External pull requests are **not** a request surface on this tracker.
 4. `On Hold` is `Set by: human (PO)` — **no plugin ever sets it or clears it.** A skill
    that believes an effort should pause says so and stops; the flip is the PO's, by
    hand, with a comment naming why and the phase to resume to.
-5. A PRD whose `Phase` matches no **live** row of the Phases database (rows marked
-   RETIRED don't count) is mis-set — stop and flag it; never route or transition from
-   a phase the machine no longer has.
+5. A PRD whose `Phase` matches no row of the Phases database is mis-set — stop and
+   flag it; never route or transition from a phase the machine does not have.
 6. After any write, re-fetch the page and confirm the phase landed and the body
    renders. A write you didn't verify is a write you didn't make.
 
@@ -203,8 +189,10 @@ Desktop Chat tab, none does). You run these; you never recite them.
   a feature nobody has chosen yet.
 
   **The template is the only body source.** Create with the `template_id` the data
-  source reports (the "PRD" default template — it carries every section and the
-  Map's two linked views), then fill the `👷‍♀️ Problem Statement` with
+  source reports (the "PRD" default template — it carries every section, the Map's
+  two linked views, and the routing callout at the top that tells any session
+  reading a PRD to load these skills first: it stays, on every PRD, untouched by
+  every write), then fill the `👷‍♀️ Problem Statement` with
   `notion-update-page` / `update_content`. If the data source reports **no
   template**, stop and say the template needs installing — never improvise a body;
   there is no fallback skeleton. Fill the Problem Statement (Context, Problem,
@@ -472,8 +460,8 @@ For `product:refine-prd` and the ticket resolvers (`design-prd`, plus the shared
   throwaway database: the API cannot recolour an option that already exists — for a
   status property `ALTER COLUMN … SET STATUS(…)` does not even parse (the DDL takes no
   options for that type), and for a select it fails outright with *"Cannot update color
-  of select with name: …"*. Colours can only be chosen at creation. Same for **renaming
-  a status option** (`Idea`→`Problem`, `In PRD`→`In Refinement` were both UI acts).
+  of select with name: …"*. Colours can only be chosen at creation. Same for **renaming a phase
+  option**, which is a UI act too.
   So a session may propose a palette and must hand over the clicks; it never promises
   to apply one. Never attempt a bare `SET STATUS` on a live board to force it — that
   would redefine the option set the rows depend on.
