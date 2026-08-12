@@ -1,0 +1,9 @@
+{
+  "name": "shared",
+  "displayName": "Shared Toolkit",
+  "version": "0.2.2",
+  "description": "Plugin-agnostic skills shared by the product and tech teams.",
+  "author": {
+    "name": "Timeleft"
+  }
+}
