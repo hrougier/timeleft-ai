@@ -1,0 +1,28 @@
+{
+  "description": "Session conduct for the product plugin. SessionStart injects the voice rules (audience register, no procedure narration, the confirmation line) so they bind even when a session never opens issue-tracker.md — sessions consult that doc on demand (often grepping one line), so conduct rules placed only there provably miss. Canonical text stays in the product-config skill's Voice section (and 'No write without a yes' in its issue-tracker.md); the hook is the delivery channel, not the source of truth. Fails open: it only echoes static text.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/product-voice.sh\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/product-binding.sh\" \"${CLAUDE_PLUGIN_ROOT}\" \"${CLAUDE_PLUGIN_DATA}\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}
