@@ -1,0 +1,28 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "timeleft-ai",
+  "description": "Timeleft team plugins: one Claude Code plugin per team, chained by a PRD-status handshake in Notion.",
+  "owner": {
+    "name": "Timeleft"
+  },
+  "plugins": [
+    {
+      "name": "shared",
+      "source": "./.claude/skills/shared",
+      "description": "Plugin-agnostic skills shared by the product and tech teams.",
+      "author": {
+        "name": "Timeleft"
+      },
+      "category": "productivity"
+    },
+    {
+      "name": "product",
+      "source": "./.claude/skills/product",
+      "description": "The product team's workflow over Notion PRDs: triage, draft, refine, resolve tickets, address comments, hand off to tech.",
+      "author": {
+        "name": "Timeleft Product"
+      },
+      "category": "productivity"
+    }
+  ]
+}
