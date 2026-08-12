@@ -55,9 +55,22 @@ past that, each gap is independent and worth reporting even if an earlier one fa
 Three of the acts this plugin routes to live in a separate plugin: researching a
 question, grilling a decision, and adding a term to the glossary.
 
-**The honest test is your own skill list, not a settings page.** A plugin the catalog
-calls installed may not have mounted. If you cannot see those three skills in this
-session, they are not there.
+**The honest test is your own skill list, not a settings page** — a plugin the catalog
+calls installed may not have mounted. But **test the one name only we could have shipped**:
+look for **`glossary-and-decisions`**. That name is ours; nothing else ships it.
+
+**`research` and `grilling` prove nothing on their own, and trusting them is how this check
+lied once already** — reporting the shared plugin as present to someone who had never
+installed it. Both are Matt Pocock's own skill names, so anyone with his marketplace added,
+or another plugin that vendored them, has skills called exactly that. On claude.ai the chat
+surface shows no plugin prefix, so a bare `research` in your list is a name with no
+provenance. Seeing all three where one of them is the distinctive one is fine; seeing only
+the two generic ones is **absence**, not presence.
+
+If the distinctive name is missing, say the plugin is missing — and if the list is somehow
+ambiguous, ask them what **Settings → Customize → Plugins** shows rather than deciding from
+a name. This is the same trap as two connectors both called GitHub: a name that looks right
+is not the thing.
 
 Missing → **Settings → Customize → Plugins**, and install **Shared Toolkit** — that's its
 name on that screen. **Browse** lists what the catalogue offers; **Add** is for when the

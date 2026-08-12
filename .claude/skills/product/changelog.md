@@ -3,6 +3,31 @@
 Append-only. One dated section per change decision (what changed, and why).
 Never rewrite or reorder past entries. Maintained by `product:update`.
 
+## 2026-08-12 — the shared-plugin check lied (third trial-run finding)
+
+Worst of the three: the trial reported *"the shared plugin's already in — researching,
+grilling, and the glossary are all reachable right now"* to a PO who had never installed it.
+A false pass in the one skill whose entire job is telling you what is actually reachable.
+
+The cause is a trap we built ourselves. The check said *"the honest test is your own skill
+list"*, which is right — but it looked for `research`, `grilling` and the glossary, and **two
+of those three names are Matt Pocock's**, vendored verbatim. Anyone with his marketplace
+added, or any other plugin that vendored them, has skills called exactly that. And the
+globally-unique naming rule doesn't help here: it made our names unique *among our plugins*,
+while claude.ai's chat surface shows **no plugin prefix at all** — which is why that rule
+exists — so a bare `research` in the list is a name with no provenance whatsoever.
+
+The fix is to probe the one name only we could have shipped: **`glossary-and-decisions`**.
+It is our coinage; nothing upstream or elsewhere ships it. Seeing all three, including that
+one, is presence. Seeing only the two generic ones is **absence** — stated explicitly,
+because that is precisely the reading the failing run got backwards. And where the list is
+ambiguous, ask what the plugins screen shows rather than deciding from a name.
+
+Recorded as the same trap already handled one section down, where two connectors are both
+called GitHub and only one is ours: **a name that looks right is not the thing.** The
+generic-name hazard is now a known cost of vendoring MP's names into a shared plugin —
+cheap to live with, as long as nothing tests identity by them. Version 0.24.3.
+
 ## 2026-08-12 — setup walks, it doesn't survey (second trial-run finding)
 
 The trial's second report was accurate and unusable. Four findings in one message: the
