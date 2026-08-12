@@ -174,7 +174,18 @@ Neither is a GitHub-access step; both are adjacent enough that losing them would
 work, and neither was written down anywhere until now.
 
 - [ ] **Push `timeleft-dev/timeleft-ai`.** Local commits reach no PO until pushed — claude.ai
-      installs from the marketplace synced against the remote. Awaiting an explicit order.
+      installs from the marketplace synced against the remote. Gated on the trial below
+      passing.
+- [ ] **Trial run from `hrougier/timeleft-ai` first** (pushed 2026-08-12): install the product
+      plugin from the personal remote and run `setup-product-ai` end to end, as a PO would.
+      The marketplace works from either remote — `marketplace.json`'s `source` paths are
+      repo-relative and name no host — so the docs pointing at `timeleft-dev` while the trial
+      installs from `hrougier` is cosmetic, not a fault.
+- [ ] **Rename the board at the moment of the move**: *Team Plugins HQ* → **Product Roadmap
+      Board v2**, in the same act that moves it into the product team's space. The name it
+      carries today is the name of a build effort; the name it needs is the one a PO landing
+      beside the production board will understand. Page IDs do not change on a rename, so no
+      binding moves with it.
 - [x] **Move the repo to `timeleft-dev`** — done 2026-08-12: `timeleft-dev/timeleft-ai`,
       **private**, which settles the *public by decision* question the personal repo left open
       and puts the repo under the same org that owns both Apps.
