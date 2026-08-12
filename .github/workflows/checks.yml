@@ -1,0 +1,243 @@
+name: checks
+
+# The gate is `pull_request`: with these checks required in main's branch protection, a
+# failure blocks the merge. That is the only trigger that can prevent anything.
+#
+# `push` to main is the tripwire, not the gate — by then the commit has landed and CI can
+# only tell you. It stays because direct pushes to main are this repo's actual practice, so
+# without it the checks would often not run at all; and because the rule most often broken
+# (a plugin changing without its changelog entry) is broken by direct commits, not by PRs.
+#
+# What CI does NOT check, deliberately: whether the files lock.md calls *verbatim* still
+# match upstream at the pin. Verbatim files carry no in-file marker — that is the doctrine,
+# so they diff clean — which leaves nothing for a workflow to detect them by. That audit
+# belongs to the `update` skill, which reads lock.md's own table and fetches the pin.
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pins-match:
+    name: Every plugin pins the same upstream commit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: One pin per lock.md, and all of them equal
+        run: |
+          set -uo pipefail
+          status=0
+          pins=""
+          for lock in .claude/skills/*/lock.md; do
+            [ -f "$lock" ] || continue
+            # Scoped to the Upstream-pin table row on purpose: a drift record is allowed to
+            # cite a commit, and an unscoped search would read that as a second pin.
+            found=$(grep -E '^\|.*https://github.com/mattpocock/skills' "$lock" \
+                    | grep -oE '\b[0-9a-f]{40}\b' | sort -u || true)
+            n=$(printf '%s' "$found" | grep -c . || true)
+            if [ "$n" -ne 1 ]; then
+              echo "::error file=$lock::expected exactly one 40-char pin in the upstream table, found $n"
+              status=1
+              continue
+            fi
+            echo "$lock -> $found"
+            pins="$pins$found
+          "
+          done
+          if [ -z "$(printf '%s' "$pins" | tr -d '[:space:]')" ]; then
+            echo "::error::no plugin lock.md yielded a pin — provenance is not optional"
+            exit 1
+          fi
+          distinct=$(printf '%s' "$pins" | grep -c . || true)
+          unique=$(printf '%s' "$pins" | sort -u | grep -c . || true)
+          if [ "$unique" -gt 1 ]; then
+            echo "::error::plugins disagree on the upstream pin — CLAUDE.md requires one pin for the whole repo"
+            status=1
+          else
+            echo "one pin across $distinct lock file(s)"
+          fi
+          exit $status
+
+  manifests:
+    name: Manifests and catalog agree
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Every manifest parses, names its own directory, and is catalogued coherently
+        run: |
+          python3 - <<'PY'
+          import json, pathlib, sys
+
+          fail = []
+          root = pathlib.Path('.')
+
+          def load(path):
+              try:
+                  return json.loads(path.read_text())
+              except (json.JSONDecodeError, OSError) as exc:
+                  fail.append(f"{path}: unreadable — {exc}")
+                  return None
+
+          catalog = load(root / '.claude-plugin/marketplace.json') or {}
+          catalogued = {}
+          for i, entry in enumerate(catalog.get('plugins', [])):
+              name, source = entry.get('name'), entry.get('source')
+              if not name or not source:
+                  fail.append(f"marketplace.json: entry {i} needs both name and source")
+                  continue
+              catalogued[name] = source
+
+          on_disk = {}
+          for manifest in sorted(root.glob('.claude/skills/*/.claude-plugin/plugin.json')):
+              plugin_dir = manifest.parent.parent
+              data = load(manifest)
+              if data is None:
+                  continue
+              name = data.get('name')
+              if not name:
+                  # Storing this under None would resurface later as "None exists on disk
+                  # but is not in marketplace.json", which names neither the file nor the
+                  # actual problem.
+                  fail.append(f"{manifest}: no name — a plugin is identified by it")
+                  continue
+              on_disk[name] = data
+              if name != plugin_dir.name:
+                  fail.append(f"{manifest}: name {name!r} != directory {plugin_dir.name!r}")
+              if not data.get('version'):
+                  fail.append(f"{manifest}: no version — it is the repo/bundle parity signal")
+              skills = plugin_dir / 'skills'
+              if not skills.is_dir() or not any(skills.glob('*/SKILL.md')):
+                  fail.append(f"{plugin_dir}: catalogued plugin ships no skills")
+              # Both are doctrine, and requiring them here is what stops "delete the
+              # changelog" from being a way past the per-commit entry check.
+              for required in ('changelog.md', 'lock.md'):
+                  if not (plugin_dir / required).is_file():
+                      fail.append(f"{plugin_dir}: no {required} — every plugin carries its own")
+
+          for name, source in catalogued.items():
+              target = root / source
+              manifest = target / '.claude-plugin/plugin.json'
+              if not manifest.is_file():
+                  fail.append(f"marketplace.json: {name} points at {source}, which has no plugin.json")
+                  continue
+              # A source that merely *contains* a manifest is not enough: it must be that
+              # plugin's own. Otherwise installing `product` could load `shared`.
+              data = load(manifest)
+              if data and data.get('name') != name:
+                  fail.append(f"marketplace.json: {name} points at {source}, whose manifest is {data.get('name')!r}")
+              if name not in on_disk:
+                  fail.append(f"marketplace.json: {name} is catalogued but not on disk")
+
+          for name, data in on_disk.items():
+              if name not in catalogued:
+                  fail.append(f"{name} exists on disk but is not in marketplace.json")
+              deps = data.get('dependencies') or []
+              if not isinstance(deps, list):
+                  fail.append(f"{name}: dependencies should be a list, found {type(deps).__name__}")
+                  deps = []
+              for dep in deps:
+                  # Tolerate the string form rather than crashing the job on it.
+                  dep_name = dep.get('name') if isinstance(dep, dict) else dep
+                  if not isinstance(dep_name, str):
+                      fail.append(f"{name}: unreadable dependency entry {dep!r}")
+                  elif dep_name not in catalogued:
+                      fail.append(f"{name} depends on {dep_name!r}, which the catalog does not offer")
+
+          for problem in fail:
+              print(f"::error::{problem}")
+          sys.exit(1 if fail else 0)
+          PY
+
+  changelog-rides-the-change:
+    name: A changed plugin ships its entry and a real bump
+    if: github.event_name != 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    env:
+      BASE_REF: ${{ github.base_ref }}
+      BEFORE: ${{ github.event.before }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Per commit, a touched plugin must gain changelog lines and a higher version
+        run: |
+          set -uo pipefail
+
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            base="origin/$BASE_REF"
+          else
+            base="$BEFORE"
+            # A branch creation, or a force-push whose predecessor is gone or is no longer
+            # an ancestor, leaves no range worth reading: before..HEAD would resolve from
+            # the merge base and drag in unrelated commits.
+            if [ -z "$base" ] || [ "$base" = "0000000000000000000000000000000000000000" ] \
+               || ! git cat-file -e "$base^{commit}" 2>/dev/null \
+               || ! git merge-base --is-ancestor "$base" HEAD 2>/dev/null; then
+              # Don't exit: a force-push is exactly how a direct pusher would slip past a
+              # tripwire that gives up here. Fall back to the tip commit alone, which is
+              # the change this push is actually claiming to make.
+              echo "no comparable predecessor — checking the tip commit alone"
+              base="$(git rev-parse HEAD)^"
+              git rev-parse -q --verify "$base" >/dev/null 2>&1 || base=""
+              if [ -z "$base" ]; then
+                echo "tip is a root commit — nothing to compare"
+                exit 0
+              fi
+            fi
+          fi
+
+          status=0
+          # Per commit, not per push: the rule is that the entry rides *the* change, and an
+          # aggregate range lets one commit's bump cover another commit's edit.
+          for sha in $(git rev-list --reverse "$base..HEAD"); do
+            changed=$(git diff-tree --no-commit-id --name-only -r "$sha")
+            for plugin in $(printf '%s\n' "$changed" \
+                            | sed -n 's|^\.claude/skills/\([^/]*\)/.*|\1|p' | sort -u); do
+              entry=".claude/skills/$plugin/changelog.md"
+              manifest=".claude/skills/$plugin/.claude-plugin/plugin.json"
+              # Anchored: a nested file that merely ends in changelog.md is not the entry.
+              touched=$(printf '%s\n' "$changed" | grep "^\.claude/skills/$plugin/" \
+                        | grep -vxF "$entry" | grep -vxF "$manifest" || true)
+              [ -z "$touched" ] && continue
+
+              # A root commit has no parent to diff against — the initial import of a
+              # curated history, not a change to police. Reporting it as a missing entry
+              # would be a false accusation, so skip it and say why.
+              if ! git rev-parse -q --verify "$sha^" >/dev/null 2>&1; then
+                echo "$(git log -1 --format=%h "$sha"): root commit, nothing to compare $plugin against"
+                continue
+              fi
+
+              # Same for a plugin still being assembled across commits: until its changelog
+              # exists there is no entry to ride, and an imported history legitimately adds
+              # skills before manifests. Deleting the changelog to reach this branch is not
+              # a bypass — the manifests job requires the file to exist.
+              if ! git cat-file -e "$sha:$entry" 2>/dev/null; then
+                echo "$(git log -1 --format=%h "$sha"): $plugin has no changelog yet, not a change to police"
+                continue
+              fi
+
+              added=$(git diff --numstat "$sha^" "$sha" -- "$entry" | awk '{print $1+0}')
+              if [ -z "$added" ] || [ "$added" -eq 0 ]; then
+                echo "::error::$plugin changed in $(git log -1 --format=%h "$sha") with no new changelog lines"
+                status=1
+              fi
+
+              old=$(git show "$sha^:$manifest" 2>/dev/null \
+                    | python3 -c 'import json,sys; print(json.load(sys.stdin).get("version",""))' 2>/dev/null || echo "")
+              new=$(git show "$sha:$manifest" 2>/dev/null \
+                    | python3 -c 'import json,sys; print(json.load(sys.stdin).get("version",""))' 2>/dev/null || echo "")
+              # Ordering, not inequality: a downgrade or a typo is not a bump, and the job
+              # name promises "a higher version".
+              if [ -z "$new" ] || [ "$old" = "$new" ] \
+                 || [ "$(printf '%s\n%s\n' "$old" "$new" | sort -V | tail -1)" != "$new" ]; then
+                echo "::error::$plugin changed in $(git log -1 --format=%h "$sha") without a higher version ($old -> ${new:-none})"
+                status=1
+              fi
+            done
+          done
+          exit $status
