@@ -3,6 +3,35 @@
 Append-only. One dated section per change decision (what changed, and why).
 Never rewrite or reorder past entries. Maintained by `product:update`.
 
+## 2026-08-12 — the code check has one route, not two (PO-directed)
+
+Yesterday's fix made the two routes asymmetric — a `gh` pass is never a pass for the
+connector. The PO went further and they're right: **for a PO there is only the GitHub MCP
+connector, so setup should not mention any other route at all.** Naming a second one invites
+a session to try it, and every sentence about which route counts more is a sentence that
+should not need to exist here.
+
+So the code check now says the connector is the whole check, and adds the rule that survives
+the deletion: whatever else this session might happen to have — another way in, a route that
+works for whoever is driving — **is not evidence about the connector and is never reported as
+a pass.** The check runs for someone with no shell, so the connector answers for itself or it
+doesn't.
+
+The failure cases collapse accordingly: no connector tools in this session (connect it —
+**GitHub MCP**, the row badged *Custom*, not Claude's own `GitHub Integration`), not in the
+list at all (published to them by someone else — a different errand), all three repositories
+404 (the App isn't installed on them), one 404 (that one was missed).
+
+Note for the record, since it nearly cost the section: the first pass at this edit **deleted
+the connect path along with the shell text** — the connectors screen, the two-connectors
+warning, the passkey-in-1Password guidance — because the cut ran to the wrong boundary. Read
+back before committing, every time; a deletion is a change like any other, and this one would
+have left a check that finds a gap and cannot say what to do about it.
+
+`code-repository.md` keeps both routes, deliberately: a resolver grounding a claim should use
+whatever it has, and in Claude Code that is often the command line. Setup is the only place
+where the *person's* route is the point. Version 0.24.4.
+
 ## 2026-08-12 — the shared-plugin check lied (third trial-run finding)
 
 Worst of the three: the trial reported *"the shared plugin's already in — researching,

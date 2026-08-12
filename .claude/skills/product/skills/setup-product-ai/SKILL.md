@@ -108,41 +108,36 @@ in **`product-config`**'s code binding, then read one small file from each repos
 one is not enough, because installation is per-repository and two can work while the
 third was never added.
 
-**The route that counts is the one this person will actually use, and for a product
-manager that is the GitHub MCP connector.** Two routes exist — the `gh` command line where
-a shell exists, and the connector where there isn't one — but they are not
-interchangeable *here*, because this skill's whole job is to verify what the human in
-front of you can reach. Discover the tools you actually have rather than assuming their
-names; if they are deferred, load them first.
+**The route is the GitHub MCP connector. There is no other one here.** This skill runs for
+product managers on claude.ai, who have no shell and never will — so the connector is not
+the fallback, it is the whole check. Discover the tools you actually have rather than
+assuming their names; if they are deferred, load them first, then read one small file from
+each repository.
 
-So: **a `gh` pass is never a pass for the connector.** If this session has a shell and the
-command line works, that proves the repositories exist and are readable *by whoever owns
-that shell* — it says nothing about the connector a PO will be using, and reporting it as
-a pass hands them a green light for a route they don't have. Check the connector on its own
-terms and report the two separately. Where both exist, the connector is the one whose
-failure matters.
+Whatever else this session might happen to have — another way in, an authenticated command
+line, a route that works for whoever is driving — **is not evidence about the connector and
+is never reported as a pass.** It would hand a PO a green light for something they don't
+have. The connector answers for itself or it doesn't.
 
 What a failure means:
 
-- **No connector, but a working shell** → say plainly that the code route works *for this
-  session* and is unverified for anyone on claude.ai, then check the connector anyway. A
-  builder's machine passing is the most misleading result this skill can produce.
-- **No tools and no shell** → this surface has no code route. That's the finding, not a
-  fault: say the reading works in Claude Code and move on. Don't send anyone to a
-  settings page over it.
-- **Connector present but not connected** → **Settings → Customize → Connectors**, find
-  **GitHub MCP** — the row badged *Custom*. It's published for the whole organisation, so
-  it's in everyone's list like any other, but **each person connects it once themselves**.
+- **No GitHub MCP tools in this session** → it isn't connected here. **Settings → Customize
+  → Connectors**, find **GitHub MCP** — the row badged *Custom*. It's published for the whole
+  organisation, so it's in everyone's list like any other, but **each person connects it once
+  themselves**.
 
-  **`GitHub Integration` in that same list is a different connector and not the one.** It
-  is Claude's own GitHub integration, it is often already connected, and connecting it does
-  nothing for this plugin. Anyone searching that list for "GitHub" sees both. Name the
-  right row, every time.
+  **`GitHub Integration` in that same list is a different connector and not the one.** It is
+  Claude's own GitHub integration, it is often already connected, and connecting it does
+  nothing for this plugin. Anyone searching that list for "GitHub" sees both. Name the right
+  row, every time.
 
   Connecting signs them in as the team's shared machine account with the **passkey in the
   product team's 1Password vault** — no password, and nothing to type into a chat. If they
-  can't see that vault, that's the gap: a vault-membership request to whoever owns it, not
-  a GitHub problem, and nothing they can fix on the connectors screen.
+  can't see that vault, that's the gap: a vault-membership request to whoever owns it, not a
+  GitHub problem, and nothing they can fix on the connectors screen.
+
+  If **GitHub MCP** isn't in the list at all, it was never published to them — say so,
+  because that is somebody else's errand, not a click of theirs.
 - **Every repository answers 404** → the app isn't installed on them. An organisation
   owner fixes that; retrying won't.
 - **One repository answers 404** → that one repository was missed at install. Name which.
