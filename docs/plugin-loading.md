@@ -30,3 +30,27 @@ Rules that fall out of this:
   pushed change without a bump lands for nobody. A session reporting an old version
   means either the bump is missing, the commit is unpushed, or sync lagged — check in
   that order.
+
+## Two routes, and only one of them reaches the team (field-tested 2026-08-12)
+
+The Directory's **Plugins** tab has tabs of its own, and they are different mechanisms:
+
+- **Personal** — what the `+` button and `/plugin marketplace add` produce: a marketplace
+  registered **for one account**. It works, it syncs, and nobody else sees it. Each person
+  would have to add it themselves *and* authenticate to GitHub — which is precisely what a PO
+  cannot do, and why this route does not scale past the person who built the thing.
+- **Your organization** — plugins published org-wide from the **admin console → Plugins**.
+  This is the access bundle: it reads the repo **server-side**, so a **private** repo reaches
+  people who have no GitHub account and never authenticate to it. Auto-sync is on, with a
+  manual **Re-sync** as the fallback.
+
+So a private repo is not an obstacle to distribution; it is only an obstacle to the personal
+route. Publish through the admin console and the repo can stay private.
+
+**Two marketplaces cannot share a declared `name`.** Both `hrougier/timeleft-ai` and
+`timeleft-dev/timeleft-ai` declare `"name": "timeleft-ai"` in `.claude-plugin/marketplace.json`,
+and a client registers a marketplace under that declared name rather than under its URL. With
+the first one added, adding the second fails with a bare **"Failed to add marketplace."** —
+no mention of a conflict, which sends you looking at the repo, the manifests and the
+credentials in turn. Removing the first one lets the second in immediately. If two remotes of
+this repo ever need to coexist in one client, one of them has to declare a different name.
