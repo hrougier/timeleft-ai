@@ -3,6 +3,25 @@
 Append-only. One dated section per change decision (what changed, and why).
 Never rewrite or reorder past entries. Maintained by `product:update`.
 
+## 2026-08-13 — the two GitHub rows, and which one goes first
+
+Setup told people to connect the org's custom **GitHub MCP** row and treated Claude's own
+**GitHub Integration** as a decoy — *"connecting it does nothing for this plugin"*. Wrong, and
+backwards: field-tested 2026-08-13, the custom row does not come up on its own. The native
+integration has to be connected **first**; then the custom one works.
+
+So the check now hands out both rows and the order in one message — native first, custom
+second — rather than naming one row and warning people off the other. The trap it was written
+against is real (searching "GitHub" returns two rows and only one reads the code), but the
+answer was never "ignore the other one"; it was "both, in this order". Anyone who starts with
+the custom row ends up connecting the native one anyway, wondering what they broke.
+
+The old text claimed the two connections were unrelated in both directions and cited a test
+for it. That test measured the right thing and drew the wrong conclusion from it: neither row
+*implies* the other, which is true and useless — what matters is that one is a prerequisite
+for the other. Recorded in `docs/github-access.md` too, since whoever debugs this by hand
+needs the sequence as much as a session does. Version 1.1.2.
+
 ## 2026-08-12 — a board is read through the plugin, and the plugin says nothing about its own past
 
 **The routing finding, which is the mechanism under most of what we have fixed this week: a

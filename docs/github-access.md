@@ -146,6 +146,10 @@ Human steps, in order:
 - [x] Give it org access — **done**, as an org member (see the note above)
 - [ ] Password + TOTP + recovery codes into the **restricted** vault; name its owner
 - [ ] Add a passkey to the account; store it in the product team's **shared** 1Password vault
+- Per person, and **the order is not guessable — field-tested 2026-08-13**: connect Claude's
+  own **`GitHub Integration`** first, *then* the custom **`GitHub MCP`** row. The custom one
+  alone does not come up. `setup-product-ai` hands out both rows in that order; anyone
+  debugging this by hand needs the same sequence
 - [x] Register **App 1** under `timeleft-dev`; install on the three repositories — **done
       2026-08-12**, App `Timeleft GitHub MCP`, webhooks off, `Contents`/`Metadata: Read-only`,
       both callback URLs, *Only on this account*. Client ID and secret live in 1Password, not

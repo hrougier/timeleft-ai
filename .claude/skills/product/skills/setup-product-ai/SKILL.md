@@ -17,8 +17,9 @@ never appears here.
 Every other skill in this plugin is forbidden to name machinery. **This one has to** —
 the human is being asked to click things, and a click has a name. So:
 
-- Name what they see in their own settings: **the Notion connector**, **the GitHub MCP
-  connector**, **Claude design**, **the shared plugin**. Those are labels on their screen.
+- Name what they see in their own settings: **the Notion connector**, **`GitHub
+  Integration`** and **`GitHub MCP`** (two rows, both wanted, in that order), **Claude
+  design**, **the shared plugin**. Those are labels on their screen.
 - Still never say a tool name, a `mcp__…` string, a data source id, or a property name.
   "The board isn't reachable" — not which call failed.
 - Everything else holds: answer first, one idea per line, an opinion not a menu, and end
@@ -51,7 +52,8 @@ button. **Not connected** is the fastest filter to send someone to.
 its own connectors declared and installing it can change what the connectors screen offers —
 checking connectors before the plugins are in means reporting gaps that install themselves.
 Then **every connector they can actually act on, in one pass**, so a person visits that
-screen once, in tiers: `Notion` and the org's `GitHub MCP` are what the workflow **needs**;
+screen once, in tiers: `Notion`, then `GitHub Integration` **and** the org's `GitHub MCP`
+in that order, are what the workflow **needs**;
 `Slack` is **advised** — without it a glossary term can only be checked against the
 conversation, so terms get written down as unverified; `Figma` is **offered**, worth a click
 only if they already work in it. Name each with its status, even the ones that pass — a
@@ -83,8 +85,7 @@ the two generic ones is **absence**, not presence.
 
 If the distinctive name is missing, say the plugin is missing — and if the list is somehow
 ambiguous, ask them what **Settings → Customize → Plugins** shows rather than deciding from
-a name. This is the same trap as two connectors both called GitHub: a name that looks right
-is not the thing.
+a name. A name that looks right is not the thing.
 
 Missing → the exact path, all of it, because every vague step here is a person hunting
 through settings:
@@ -136,7 +137,8 @@ in **`product-config`**'s code binding, then read one small file from each repos
 one is not enough, because installation is per-repository and two can work while the
 third was never added.
 
-**The route is the GitHub MCP connector. There is no other one here.** This skill runs for
+**The route is the GitHub MCP connector — which only comes up once Claude's own GitHub
+Integration is connected (see the failure branch below).** This skill runs for
 product managers on claude.ai, who have no shell and never will — so the connector is not
 the fallback, it is the whole check. Discover the tools you actually have rather than
 assuming their names; if they are deferred, load them first, then read one small file from
@@ -149,31 +151,30 @@ have. The connector answers for itself or it doesn't.
 
 What a failure means:
 
-- **No GitHub MCP tools in this session** → it isn't connected here. **Settings → Customize
-  → Connectors**, find **GitHub MCP** — the row badged *Custom*. It's published for the whole
-  organisation, so it's in everyone's list like any other, but **each person connects it once
-  themselves**.
+- **No GitHub MCP tools in this session** → it isn't connected here. Send them to
+  **Settings → Customize → Connectors** — and searching "GitHub" there shows **two rows that
+  both matter**:
 
-  **`GitHub Integration` in that same list is a different connector and not the one.** It is
-  Claude's own GitHub integration, it is often already connected, and connecting it does
-  nothing for this plugin. Anyone searching that list for "GitHub" sees both. Name the right
-  row, every time.
+  > 1. **`GitHub Integration`** — Claude's own, no badge. Connect this **first**.
+  > 2. **`GitHub MCP`** — the row badged *Custom*, the one this plugin reads code through.
 
-  **Neither connection implies the other — field-tested 2026-08-12, in both directions.**
-  Connecting **GitHub MCP** leaves `GitHub Integration` disconnected, and having
-  `GitHub Integration` connected does nothing for the code route. So two readings are wrong
-  and both are easy: *"GitHub is connected, so the code should work"* (the wrong row), and
-  *"I connected the plugin's one, why does the other still say disconnected"* (nothing is
-  broken — it is simply unrelated and can stay that way). Say which row you mean, and say
-  that the other one doesn't matter.
+  **The order is the whole trick, and it is not guessable — field-tested 2026-08-13.**
+  `GitHub MCP` connected on its own does not come up; connect `GitHub Integration` first and
+  it does. Someone who starts with the *Custom* row ends up connecting the native one
+  afterwards anyway and wondering what they did wrong, so give both rows and the order the
+  first time, in one message, never one row at a time.
 
-  Connecting signs them in as the team's shared machine account with the **passkey in the
-  product team's 1Password vault** — no password, and nothing to type into a chat. If they
-  can't see that vault, that's the gap: a vault-membership request to whoever owns it, not a
-  GitHub problem, and nothing they can fix on the connectors screen.
+  `GitHub MCP` is published for the whole organisation, so it sits in everyone's list like
+  any other row — but **each person connects it themselves**, and connecting it signs them in
+  as the team's shared machine account with the **passkey in the product team's 1Password
+  vault**: no password, and nothing to type into a chat. If they can't see that vault, that's
+  the gap — a vault-membership request to whoever owns it, not a GitHub problem and nothing
+  they can fix on the connectors screen.
 
-  If **GitHub MCP** isn't in the list at all, it was never published to them — say so,
-  because that is somebody else's errand, not a click of theirs.
+  If `GitHub MCP` isn't in the list at all, it was never published to them — say so, because
+  that is somebody else's errand, not a click of theirs. If only `GitHub Integration` will
+  connect and the *Custom* row still refuses, that is the same errand: stop there rather than
+  sending them round the screen again.
 - **Every repository answers 404** → the app isn't installed on them. An organisation
   owner fixes that; retrying won't.
 - **One repository answers 404** → that one repository was missed at install. Name which.
