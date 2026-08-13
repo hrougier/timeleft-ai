@@ -61,7 +61,7 @@ The maintainer invokes `/triage-prd` and describes what they want in natural lan
 - "Move #42 to ready-for-agent"
 - "What's ready for agents to pick up?"
 
-On this tracker the request usually arrives unfiled — "we want to work on X", said in a session. File it first per the tracker doc's filing act — the proposed name and problem statement shown for a yes before anything lands: a `needs-triage` issue carrying the problem statement and nothing else — the problem in the requester's terms, never a solution. A solution is an answer; triage's job is to find the question it answers and triage *that*. Proposing the solution is `/draft-prd`'s job, one state later. Once filed, triage it like any other issue.
+On this tracker the request usually arrives unfiled — "we want to work on X", said in a session. File it first per the tracker doc's filing act — the proposed name and problem statement shown for a yes before anything lands: a `needs-triage` issue carrying the problem statement and nothing else — the problem in the requester's terms, never a solution. A solution is an answer; triage's job is to find the question it answers and triage *that*. Proposing the solution is drafting's job, one state later — and triage **offers** that next step rather than taking it: say the PRD is ready to be drafted and let the human say when, because a session that files a problem and then answers it in the same breath has given nobody a chance to disagree with the problem. Once filed, triage it like any other issue.
 
 ## Show what needs attention
 

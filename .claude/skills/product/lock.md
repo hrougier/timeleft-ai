@@ -151,6 +151,12 @@ vendoring convention.
   before any human saw its name: filing now goes behind the tracker doc's
   confirmation line ("no write without a yes") — the original patch front-ran MP's
   own Recommend-then-wait discipline.
+- **P7 — triage offers drafting, never runs it** (§Invocation, the unfiled-report
+  paragraph; 2026-08-13, PO's order). The tos v2 spec's composition rule — a user-invoked
+  skill never calls another user-invoked skill — was being broken here, and the reason it
+  matters is not the doctrine: a session that files the problem and answers it in one turn
+  never lets anyone disagree with the problem. `ask-prd-ai`'s routing line dropped the same
+  promise. The tech plugin's `triage-issue` carries the mirror of this.
 - **P4 — Fold outcome** (§Apply the outcome, one bullet). A third disposition found in
   the first dry run: a live issue covers the area and the request adds a real
   nuance — comment the nuance onto it, file nothing. Upstream has no counterpart

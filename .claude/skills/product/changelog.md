@@ -3,6 +3,22 @@
 Append-only. One dated section per change decision (what changed, and why).
 Never rewrite or reorder past entries. Maintained by `product:update`.
 
+## 2026-08-13 — triage offers the next step; it does not take it
+
+Triage accepted a request and went straight on to drafting it. Two problems, and the smaller
+one is the doctrine: the tos v2 spec's composition rule says a user-invoked skill never calls
+another user-invoked skill, and both plugins were breaking it in the same place.
+
+The one that actually matters: **a session that files a problem and then answers it in the same
+turn never gives anyone a chance to disagree with the problem.** Filing is where the requester's
+own words get pinned down; drafting is where somebody proposes what to do about them. Running
+them together makes the first invisible.
+
+So triage now says the PRD is ready to be drafted and stops. The router's line dropped its
+matching promise — acceptance *offers* drafting rather than calling it. The tech plugin's
+triage carries the mirror, and the Phases table's routing cell no longer says triage calls
+anything. Version 1.1.3.
+
 ## 2026-08-13 — the two GitHub rows, and which one goes first
 
 Setup told people to connect the org's custom **GitHub MCP** row and treated Claude's own
