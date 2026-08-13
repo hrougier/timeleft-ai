@@ -20,7 +20,7 @@
       "source": "./.claude/skills/product",
       "description": "The product team's workflow over Notion PRDs: triage, draft, refine, resolve tickets, address comments, hand off to tech.",
       "author": {
-        "name": "Timeleft Product"
+        "name": "Timeleft"
       },
       "category": "productivity"
     }

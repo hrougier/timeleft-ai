@@ -37,7 +37,9 @@ because that is what this file is for.
 production board as a source, added after a session offered to fold a production PRD's scope
 into ours. It was a misreading — the PO had told that session to look at production precisely
 because it was further along, so the behaviour was correct and the rule punished it. The
-standing guard is unchanged and sufficient: read it, never write to it. Version 1.1.1.
+standing guard is unchanged and sufficient: read it, never write to it.
+
+Also: the author reads **Timeleft**, not "Timeleft Product" (PO's call) — the plugin is named Product Team already, so the column was saying it twice, and both plugins now sign the same way. Version 1.1.1.
 
 ## 2026-08-12 — 1.0.0: the board starts from a clean page
 
